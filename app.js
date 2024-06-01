@@ -27,6 +27,6 @@ app.get('/', function(req, res) {
 app.get('/kontakt', (req,res) => {
     res.send('to są dane kontaktowe')
 })
-
+//test
 //nasluchwianie portu
 app.listen(port)
