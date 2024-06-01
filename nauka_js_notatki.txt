@@ -1,0 +1,107 @@
+Pierwsza aplikacja
+	//pobieranie funkcji z innego pliku za pomocą obiektu
+	app.js
+			const utils = require('./utils')
+
+			utils.greet()
+			utils.add(4,5)
+	utils.js
+			const greet = () => {
+			console.log('hello node!')
+			}
+			
+			const add = (a, b) => {
+				console.log(a+b)
+			}
+
+			console.log('The file is loaded')
+
+			//udostpępnianie funkcji na świat za pomocą obiektu
+			module.exports = {
+				greet,
+				add
+			}
+--------------------------------------------------------------------------------
+Druga aplikacja
+	app.js
+			//wczytywanie biblioteki http
+			const http = require('http')
+			const port = 3000
+
+			//handler czyli to co ma się dziać po wejściu użytkownika na serwer
+			const handler = (request, response) => {
+				//w konsoli to się wyświetla
+				console.log('new user!')
+				//a to w przeglądarce po wejściu na localhost:3000
+				response.end('hello node')
+			}
+
+			//tworzenie servera i przypisanie handlera
+			const server = http.createServer(handler)
+
+			//nasluchiwanie portu 3000
+			server.listen(port, (err) => {
+				if(err) {
+					return console.log('something went bad - error')
+				}
+				console.log('server is running..')
+			})
+--------------------------------------------------------------------------------
+
+Trzecia aplikacja
+	app.js
+			//wczytywanie biblioteki http
+			const express = require('express')
+			const port = 3000
+
+
+			//zainicjowanie biblioteki express
+			const app = express()
+
+			//gdy użytkownik wejdzie na główną strone !!!taka uwaga można użyć function(req,res){} lub (req, res) => {} obie są poprawne i użyta ta pierwsza sprawia, że this odnosi się tylko do klamerek po function a przy tej drugiej this, odnosi się wyżej
+			app.get('/', function(req, res) {
+				res.send('Hello uzytkowniku')
+			})
+			app.get('/kontakt', (req,res) => {
+				res.send('to są dane kontaktowe')
+			})
+
+			//nasluchwianie portu
+			app.listen(port)
+--------------------------------------------------------------------------------
+
+Czwarta aplikacja
+	app.js
+				//wczytywanie biblioteki http
+			const { generatePrime } = require('crypto')
+			const express = require('express')
+			//port automatycznie wybrany lub 3000
+			const port = process.env.PORT || 3000
+
+			//funkcja która później jest odczytywana przy renderowaniu strony w tytule
+			const generateTitle = () => {
+				return 'Node js genereting dynamic'
+			}
+
+			//zainicjowanie biblioteki express
+			const app = express()
+			//zainicjowanie by aplikacja korzystała z silnika szablonów 'hbs'
+			app.set('view engine', 'hbs')
+
+
+			app.get('/', function(req, res) {
+				//wskazanie na szablon index.hbs oraz utworzenie zmienny o nazwie pageTitle oraz PageBody które można zastosować później w dokumencie index.hbs
+
+				const title = generateTitle()
+
+				res.render('index', {
+					pageTitle: title,
+					pageBody: 'hello noide' 
+				})
+			})
+			app.get('/kontakt', (req,res) => {
+				res.send('to są dane kontaktowe')
+			})
+
+			//nasluchwianie portu
+			app.listen(port)

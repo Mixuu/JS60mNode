@@ -1,6 +1,7 @@
 //wczytywanie biblioteki http
 const { generatePrime } = require('crypto')
 const express = require('express')
+//port automatycznie wybrany lub 3000
 const port = process.env.PORT || 3000
 
 //funkcja która później jest odczytywana przy renderowaniu strony w tytule
